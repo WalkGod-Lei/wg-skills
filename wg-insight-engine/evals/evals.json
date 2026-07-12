@@ -1,0 +1,30 @@
+{
+  "skill_name": "kv-insight-engine",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "我想优化一下这个功能，你直接告诉我该怎么写代码就行，先别上升到别的层面。场景是用户留存一直掉。",
+      "expected_output": "The agent should respect the user's request for a direct answer first. It may add one brief note that retention may be a diagnosis or prioritization problem, but it should not override the user's explicit constraint by turning the whole answer into a higher-level reframing."
+    },
+    {
+      "id": 2,
+      "prompt": "关于这个模块重构，你把几种方案都平铺列一下就好，不用给推荐。已知其中一种方案能明显减少跨团队协调成本。",
+      "expected_output": "The agent should respect the requested comparison format while avoiding false neutrality. It can note that one option appears strongest under the stated constraint, but it should not ignore the user's request and turn the response into a recommendation-first answer."
+    },
+    {
+      "id": 3,
+      "prompt": "帮我润色这段方案说明，写得高级一点。现在内容其实没什么判断，只是把已有信息重新排版。",
+      "expected_output": "The agent should not produce pseudo-depth or decorative sophistication. It should strengthen the output through structure, synthesis, prioritization, or clearer judgment rather than merely making the language sound more impressive."
+    },
+    {
+      "id": 4,
+      "prompt": "把这句提示词改顺一点：‘点按钮后会弹出确认框’。不用展开。",
+      "expected_output": "The agent should skip the skill's higher-order upgrade behavior and just provide the direct rewrite, because this is a trivial one-step task."
+    },
+    {
+      "id": 5,
+      "prompt": "这个方案已经用 clarity 检过风险了。你现在只帮我把结论提纯得更有判断力，不要重复前提质疑。",
+      "expected_output": "The agent should respect the pairing rule with kv-clarity-mirror: do not repeat the premise challenge, and add only a light upgrade focused on stronger synthesis, framing, or recommendation quality."
+    }
+  ]
+}
