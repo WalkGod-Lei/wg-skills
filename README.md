@@ -27,11 +27,8 @@ curl -sL https://github.com/WalkGod-Lei/wg-skills/archive/refs/heads/main.tar.gz
 tar xz --strip-components=2 -C ~/.qoderworkcn/skills/wg-github-tuisong wg-skills-main/wg-github-tuisong
 ```
 
-## Repo Conventions
+## About
 
-| Repo | Purpose |
-|------|---------|
-| `bystander` | 局外先生 IP skills |
-| `la-group` | 懒懒团 LLT IP skills |
-| `wg-1107` | Personal skills |
-| `wg-skills` | Reusable tools & workflows (this repo) |
+All skills here are designed for AI agents (QoderWork, WorkBuddy, etc.) that support the SKILL.md convention.
+Each skill directory contains a `SKILL.md` (the agent-readable instruction file) and optional `references/` (supplementary docs).
+Install by copying the skill directory to your agent's skills folder, or use the install scripts provided in each skill directory.
