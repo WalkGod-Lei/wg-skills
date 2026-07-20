@@ -1,146 +1,126 @@
-# 常见问题与排查
+# 故障排查
 
-## 1. window.open 拦截器失效
+仅在主流程失败时读取本文件。优先修复 API/认证问题，不要立即退回逐条点击。
 
-**现象**：点击灰色区块后 `window.__urls` 没有新增 URL。
+## 1. 找不到登录令牌
 
-**原因**：侧边栏切换笔记后 Vue.js 重新渲染组件，可能重置了 `window.open` 引用。
+**现象**：`No biji.com login token found`。
 
-**解决**：每次切换笔记后，立即重新设置拦截器：
+检查：
 
-```javascript
-(window.__origOpen = window.__origOpen || window.open)
-  && (window.open = function(url) { window.__urls.push(url); return null; })
-  && 're-intercepted'
+1. 用户是否已在目标 Chrome 配置文件登录并能打开该知识库；
+2. 快照是否来自正确的 `Default` 或 `Profile N`；
+3. 快照是否包含 `.ldb`、`.log`、`CURRENT`、`MANIFEST-*` 等 LevelDB 文件；
+4. `NODE_PATH` 是否指向安装了 `level@10` 的临时 `node_modules`。
+
+不要要求用户把 token 粘贴进聊天。可以重新生成任务临时快照，或在已登录的 `biji.com` 页面上下文中执行同源提取。
+
+## 2. LevelDB 锁定或损坏
+
+**现象**：`LOCK`、`IO error`、`Corruption` 或文件复制失败。
+
+- 不要写入或修复 Chrome 原始数据库。
+- 复制整个 `leveldb` 目录，而不是只复制一个 `.log` 文件。
+- 对快照以 `readOnly: true` 打开。
+- 若 Chrome 正在写入导致快照不一致，重新复制一次；仍失败时才让用户关闭 Chrome 后重试。
+
+## 3. 刷新令牌失败
+
+**现象**：刷新端点返回 401、`LoginRequired`，或没有新 token。
+
+- 当前访问 token 仍可能有效，脚本会尝试继续；随后列表请求也失败则说明登录态已过期。
+- 让用户在 Chrome 中重新登录/刷新目标页面，再重新制作快照。
+- 不创建 OpenAPI Key 作为替代。站点 OpenAPI 可能要求付费权限，且与 Web 会话接口不是同一认证体系。
+
+## 4. `AppNotFound` 或认证错误
+
+确认每次请求都带有：
+
+```text
+Authorization: Bearer <短期 token>
+X-Appid: 3
+X-Av: 1.2.2
+Xi-App-Client-Source: getnote
+Xi-Client-Source: web
+X-Request-ID: <每次请求新的 UUID>
+x-d: <若登录态中存在 device_id>
 ```
 
-**验证拦截器是否生效**：
+已验证的 Web API 路线不要求自行伪造 `Xi-Csrf-Token`。若站点以后新增必需头，从已登录页面的真实网络请求中确认，不能猜。
 
-```javascript
-window.open.toString().substring(0, 80)
-// 应返回: "function(url) { window.__urls.push(url); return null; }"
+## 5. 主题 ID 解析失败
+
+主题别名来自 `/subject/<alias>/...`。用以下目录接口解析数字 `topic_id`：
+
+```text
+GET /v1/web/topic/resource/list/mix
+  ?topic_id=-1
+  &topic_id_alias=<alias>
+  &sort=create_time_desc
+  &resource_type=0
+  &page=1
 ```
 
-## 2. 灰色区块选择器找不到元素
+常见位置是 `c.current_directory.topic_id`。若结构变化，在浏览器网络面板中检查目标页对应响应并更新字段映射；不要把某个知识库的数字 ID 写死。
 
-**现象**：`document.querySelector('.cursor-pointer.rounded-lg.bg-gray-F5F6F7')` 返回 null。
+## 6. 缺少 `followId`
 
-**原因**：切换笔记后页面还在渲染中，灰色区块尚未出现。
+`follow/account/posts` 需要 `topic_id` 和 `follow_id`。优先从用户链接的 `followId` 查询参数读取。若链接没有：
 
-**解决**：等待 1-2 秒后重试，或用轮询：
+- 查看浏览器最终 URL 是否跳转后补全；
+- 检查页面加载时的 `follow/account/posts` 请求体；
+- 无法确认时向用户索取完整链接，不要枚举或猜测 ID。
 
-```javascript
-document.querySelector('.cursor-pointer.rounded-lg.bg-gray-F5F6F7') ? 'found' : 'not found'
+## 7. 分页数量不符
+
+- 固定 `page_size=50`，从第 1 页递增。
+- 当累计数量达到 API `total`，或末页条数小于 50 时停止。
+- 对所有 `post_id_str` 去重；发现重复 ID 时整次重跑，避免页面更新期间跨页漂移。
+- 用户给出的数量与 API 总数不一致时，重新加载页面确认是否近期新增/删除，并在交付中说明基准时间。
+
+## 8. 详情为空或字段变化
+
+详情请求体应为：
+
+```json
+{
+  "topic_id": -1,
+  "topic_id_alias": "<alias>",
+  "post_id": "<字符串 ID>",
+  "load_media_text": true
+}
 ```
 
-## 3. 侧边栏虚拟滚动：笔记数量不符
+字段优先级：
 
-**现象**：`querySelectorAll('.sider-list-item').length` 返回的数字小于知识库实际笔记数。
+- 原文：`post_media_text` → `post_content` / `post_text` / `content`
+- 总结：`post_cleaned_summary` → `post_summary`
+- 标题：`post_name` → `post_title`
 
-**原因**：侧边栏使用 `.n-scrollbar-container` 虚拟滚动，DOM 中仅渲染可见项（约 50 项）。
+部分手写笔记可能天然没有媒体转写，部分新笔记可能尚未生成 AI 总结。先在页面抽查该条，再决定是合法空值还是提取失败。
 
-**解决**：以实际 DOM 渲染数为准。如果知识库有超过 50 篇笔记，只有当前 follow 下的可见笔记会被提取。尝试滚动侧边栏加载更多：
+## 9. 429、5xx 或连接中断
 
-```javascript
-eval("var sc = document.querySelector('.n-scrollbar-container'); sc.scrollTop = sc.scrollHeight; 'scrolled'")
-```
+- 将并发从默认 6 降到 2–4；不要超过 12。
+- 对 429/5xx 和短暂网络错误使用指数退避，最多重试 3 次。
+- 保持详情结果按原列表索引回填，不能按响应完成顺序打乱。
+- 若多次失败，保存失败 ID 清单并停止完整性交付，不要遗漏后继续宣称“全部”。
 
-## 4. API 调用返回 AppNotFound
+## 10. 浏览器工具不稳定
 
-**现象**：直接 fetch `knowledge-api.trytalks.com` 返回 `{"message":"AppNotFound"}`。
+浏览器控制桥接超时不等于站点接口不可用。优先切换到本地只读快照 + 脚本路线。若必须使用页面上下文：
 
-**原因**：API 需要完整认证上下文（Authorization Bearer token + Xi-Csrf-Token + x-d + 其他 headers），裸调或仅带部分 headers 会被拒绝。
+- 让令牌始终留在页面 JavaScript 内；
+- 直接调用分页和详情 API，并触发 JSON 下载；
+- 避免把大批正文作为工具返回值传回。
 
-**解决**：通过 XHR 拦截器从页面自身的 API 调用中捕获完整 headers（见 SKILL.md 步骤 3）。关键 headers 列表：
-- `Authorization`: Bearer JWT token（有效期约 30 分钟）
-- `Xi-Csrf-Token`: CSRF 防护 token
-- `x-d`: 设备标识
-- `Xi-App-Client-Source`: 固定为 `getnote`
-- `X-Appid`: 固定为 `3`
+## 11. UI 兜底重复或漏项
 
-## 5. Authorization Token 过期
+Vue 会重渲染和重排侧边栏，长期保存的 DOM 节点或索引会失效。每次切换后重新查询元素，并以 `post_id`/详情链接去重。虚拟滚动还会让 DOM 数量小于实际总数，因此 DOM 元素数量不能作为最终完整性依据。
 
-**现象**：之前正常工作的 API 调用突然返回 `{"message":"LoginRequired"}`。
+## 12. Word 文档页数异常
 
-**原因**：JWT token 有效期约 30 分钟（`exp - iat ≈ 1800s`）。
-
-**解决**：重新执行 XHR 拦截流程捕获新 token。点击任意侧边栏项触发 API 调用，从新请求中读取 `Authorization` header。
-
-## 6. fetch 请求挂起或 CORS 错误
-
-**现象**：使用 `fetch()` 调用 API 时 Promise 永远 pending，或报 CORS 错误。
-
-**原因**：从 biji.com 页面 context 发起的 fetch 到 `knowledge-api.trytalks.com` 可能触发 CORS preflight OPTIONS 请求失败。
-
-**解决**：优先使用 `XMLHttpRequest` 代替 `fetch`。XHR 在同源策略下表现更稳定：
-
-```javascript
-eval("var xhr = new XMLHttpRequest(); xhr.open('POST', url, true); /* set headers */; xhr.onload = function() { window.__result = xhr.responseText; }; xhr.send(body); 'sent'")
-```
-
-## 7. iframe 内容为空
-
-**现象**：iframe onload 后立即读取 `contentDocument.querySelector('main')` 返回 null 或空字符串。
-
-**原因**：biji.com 是 SPA，iframe 加载的是空壳 HTML，需要等待 Vue 渲染完成。
-
-**解决**：onload 后等待 **5 秒** 再读取内容：
-
-```javascript
-iframe.onload = function() {
-  setTimeout(function() {
-    var main = iframe.contentDocument.querySelector('main');
-    window.__allTexts[pid] = main ? main.innerText : 'no content';
-  }, 5000);
-};
-```
-
-## 8. fetch + DOMParser 返回原始 HTML
-
-**现象**：通过 `fetch()` 获取笔记页 HTML 后用 `DOMParser` 解析，`querySelector('main')` 返回 null。
-
-**原因**：SPA 页面的 `<main>` 元素由 Vue 在客户端渲染生成，静态 HTML 中不存在。
-
-**解决**：不要用 fetch + DOMParser。使用同源 iframe（自动执行 Vue 渲染）或逐页导航。
-
-## 9. window.location.href 导航销毁 JS 上下文
-
-**现象**：通过 `window.location.href = url` 导航后，之前设置的变量和函数全部丢失。
-
-**原因**：页面导航会销毁整个 JS 执行环境。
-
-**解决**：使用 iframe 在当前页面内加载目标 URL，或者使用 MCP 的 `navigate` 工具逐页导航（每页独立读取）。
-
-## 10. JS 变量赋值返回 undefined
-
-**现象**：`const x = document.querySelector(...)` 在浏览器 JS 工具中返回 undefined。
-
-**原因**：此环境的浏览器 JS 工具对 `const`/`let` 中间变量赋值的返回值处理有缺陷。
-
-**解决**：使用链式表达式（`&&` 连接）或 `eval()` 包装：
-
-```javascript
-// 方法1：链式调用
-document.querySelector('.foo') && document.querySelector('.foo').click()
-
-// 方法2：eval 包装（适合复杂逻辑）
-eval("var x = document.querySelector('.foo'); x.click(); 'clicked'")
-```
-
-## 11. 侧边栏点击导致 URL 重复
-
-**现象**：批量收集 post_id 时，连续两个笔记返回相同的 URL 或 post_id。
-
-**原因**：页面渲染延迟，点击下一个侧边栏项时上一个笔记的内容还未完全切换。
-
-**解决**：增加侧边栏点击后的等待时间（从 200ms 增加到 500ms），或在收集后去重：
-
-```javascript
-window.__capturedPostIds = [...new Set(window.__capturedPostIds)];
-```
-
-## 12. 页面存在 app-error-page 元素
-
-**现象**：页面 HTML 中有多个 `app-error-page` div 和"重新加载"按钮。
-
-**说明**：这些元素默认隐藏（`display: none`），是错误状态的占位符，与内容提取无关。点击它们不会加载完整原文。
+- 不要强制每条笔记另起一页；封面后采用连续流更紧凑。
+- 标题识别应基于结构化字段，不要把 AI 总结中的中文短句误判为标题。
+- 使用真实 Word 编号/项目符号和超链接。
+- 渲染全部页面，检查空白页、孤行、截断、字体替换、链接和末页完整性。
