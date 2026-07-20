@@ -4,16 +4,23 @@ $ErrorActionPreference = "Stop"
 $Repo = "WalkGod-Lei/wg-skills"
 $Branch = "main"
 $SkillName = "wg-biji-note-extractor"
-$BaseUrl = "https://raw.githubusercontent.com/$Repo/$Branch"
+$BaseUrl = "https://raw.githubusercontent.com/$Repo/$Branch/$SkillName"
 
 Write-Host "==========================================" -ForegroundColor Cyan
-Write-Host "  wg-biji-note-extractor v2 技能安装器" -ForegroundColor Cyan
+Write-Host "  wg-biji-note-extractor v3 技能安装器" -ForegroundColor Cyan
 Write-Host "==========================================" -ForegroundColor Cyan
 Write-Host ""
 
 # 检测 Agent 目录
 $Agents = @()
 $Paths = @()
+
+# Codex
+$codexPath = Join-Path $env:USERPROFILE ".codex\skills"
+if (Test-Path $codexPath) {
+    $Agents += "Codex"
+    $Paths += Join-Path $codexPath $SkillName
+}
 
 # QoderWork CN
 $qwPath = Join-Path $env:USERPROFILE ".qoderworkcn\skills"
@@ -40,6 +47,7 @@ if ($Agents.Count -eq 0) {
     Write-Host "未检测到支持 Skill 的 Agent 目录。" -ForegroundColor Yellow
     Write-Host ""
     Write-Host "支持的 Agent 及目录："
+    Write-Host "  - Codex:        %USERPROFILE%\.codex\skills\"
     Write-Host "  - QoderWork CN: %USERPROFILE%\.qoderworkcn\skills\"
     Write-Host "  - WorkBuddy:    %USERPROFILE%\.workbuddy\skills\"
     Write-Host "  - ProMa:        %USERPROFILE%\.proma\default-skills\"
@@ -59,15 +67,19 @@ Write-Host ""
 function Install-Skill {
     param([string]$TargetDir, [string]$AgentName)
 
-    $refDir = Join-Path $TargetDir "references"
-    if (-not (Test-Path $refDir)) {
-        New-Item -ItemType Directory -Path $refDir -Force | Out-Null
+    foreach ($relativeDir in @("references", "scripts", "agents")) {
+        $directory = Join-Path $TargetDir $relativeDir
+        if (-not (Test-Path $directory)) {
+            New-Item -ItemType Directory -Path $directory -Force | Out-Null
+        }
     }
 
     Write-Host "  安装到 $AgentName... " -NoNewline
 
     Invoke-WebRequest -Uri "$BaseUrl/SKILL.md" -OutFile (Join-Path $TargetDir "SKILL.md")
-    Invoke-WebRequest -Uri "$BaseUrl/references/troubleshooting.md" -OutFile (Join-Path $refDir "troubleshooting.md")
+    Invoke-WebRequest -Uri "$BaseUrl/references/troubleshooting.md" -OutFile (Join-Path $TargetDir "references\troubleshooting.md")
+    Invoke-WebRequest -Uri "$BaseUrl/scripts/extract_biji.cjs" -OutFile (Join-Path $TargetDir "scripts\extract_biji.cjs")
+    Invoke-WebRequest -Uri "$BaseUrl/agents/openai.yaml" -OutFile (Join-Path $TargetDir "agents\openai.yaml")
 
     Write-Host "OK" -ForegroundColor Green
 }
