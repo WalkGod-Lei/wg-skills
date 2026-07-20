@@ -4,7 +4,7 @@ set -euo pipefail
 REPO="WalkGod-Lei/wg-skills"
 BRANCH="main"
 SKILL_NAME="wg-biji-note-extractor"
-BASE_URL="https://raw.githubusercontent.com/${REPO}/${BRANCH}"
+BASE_URL="https://raw.githubusercontent.com/${REPO}/${BRANCH}/${SKILL_NAME}"
 
 # 颜色
 GREEN='\033[0;32m'
@@ -12,13 +12,19 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 echo "=========================================="
-echo "  wg-biji-note-extractor v2 技能安装器"
+echo "  wg-biji-note-extractor v3 技能安装器"
 echo "=========================================="
 echo ""
 
 # 检测 Agent 目录
 declare -a AGENTS=()
 declare -a PATHS=()
+
+# Codex
+if [ -d "$HOME/.codex/skills" ]; then
+    AGENTS+=("Codex")
+    PATHS+=("$HOME/.codex/skills/$SKILL_NAME")
+fi
 
 # QoderWork CN
 if [ -d "$HOME/.qoderworkcn/skills" ]; then
@@ -42,6 +48,7 @@ if [ ${#AGENTS[@]} -eq 0 ]; then
     echo -e "${YELLOW}未检测到支持 Skill 的 Agent 目录。${NC}"
     echo ""
     echo "支持的 Agent 及目录："
+    echo "  - Codex:        ~/.codex/skills/"
     echo "  - QoderWork CN: ~/.qoderworkcn/skills/"
     echo "  - WorkBuddy:    ~/.workbuddy/skills/"
     echo "  - ProMa:        ~/.proma/default-skills/"
@@ -62,12 +69,14 @@ download_skill() {
     local target_dir="$1"
     local agent_name="$2"
 
-    mkdir -p "$target_dir/references"
+    mkdir -p "$target_dir/references" "$target_dir/scripts" "$target_dir/agents"
 
     echo -n "  安装到 ${agent_name}... "
 
     curl -fsSL "${BASE_URL}/SKILL.md" -o "$target_dir/SKILL.md"
     curl -fsSL "${BASE_URL}/references/troubleshooting.md" -o "$target_dir/references/troubleshooting.md"
+    curl -fsSL "${BASE_URL}/scripts/extract_biji.cjs" -o "$target_dir/scripts/extract_biji.cjs"
+    curl -fsSL "${BASE_URL}/agents/openai.yaml" -o "$target_dir/agents/openai.yaml"
 
     echo -e "${GREEN}OK${NC}"
 }
