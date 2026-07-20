@@ -1,0 +1,4 @@
+interface:
+  display_name: "得到大脑笔记提取"
+  short_description: "批量提取得到大脑知识库原文、AI 总结并生成完整 Word 文档"
+  default_prompt: "Use $wg-biji-note-extractor to extract every accessible note from this biji.com knowledge-base link, verify completeness, and deliver the requested file."
