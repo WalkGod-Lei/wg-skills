@@ -12,7 +12,7 @@ WG 取自 WalkGod，这里是「走神」个人 AI 体系中对外开放的一�
 | **wg-github-renew-locate** | `wg-github-renew-locate/` | GitHub → 本地：从远程仓库拉取并更新 skill 到本地 | v1.0.0 |
 | **wg-biji-note-extractor** | `wg-biji-note-extractor/` | API 优先批量提取得到大脑知识库完整原文、AI 总结并生成文档 | v3.0.0 |
 | **wg-insight-engine** | `wg-insight-engine/` | 正向能力放大器：更强的判断、更深的框架、更高维度的建议 | v1.0.0 |
-| **wg-cognitive-reconstruction** | `wg-cognitive-reconstruction/` | 一分钟认知复述训练：将收藏的观点/金句转化为自己的表达能力 | v1.0.0 |
+| **wg-cognitive-reconstruction** | `wg-cognitive-reconstruction/` | 一分钟认知重构训练：将收藏的观点/金句转化为自己的理解、判断与原创表达 | v2.0.0 |
 
 ### Obsidian
 
