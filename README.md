@@ -1,27 +1,27 @@
 # wg-skills
 
-WG 取自 WalkGod，这里是「走神」个人 AI 体系中对外开放的一部分：可复用的 Skills、工具和工作流。
+WG is short for WalkGod. This is the public-facing part of the WalkGod personal AI system: reusable Skills, tools, and workflows.
 
 ## Skills
 
 | Skill | Directory | Description | Version |
 |-------|-----------|-------------|--------|
-| **wg-github-tuisong** | `wg-github-tuisong/` | 本地 → GitHub：把本地 skill 文件推送到远程仓库 | v1.0.0 |
-| **wg-github-renew-locate** | `wg-github-renew-locate/` | GitHub → 本地：从远程仓库拉取并更新 skill 到本地 | v1.0.0 |
-| **wg-biji-note-extractor** | `wg-biji-note-extractor/` | API 优先批量提取得到大脑知识库完整原文、AI 总结并生成文档 | v3.0.0 |
-| **wg-insight-engine** | `wg-insight-engine/` | 正向能力放大器：更强的判断、更深的框架、更高维度的建议 | v1.0.0 |
-| **wg-cognitive-reconstruction** | `wg-cognitive-reconstruction/` | 有边界的观点讨论：同步训练观点吸收、论证逻辑、高认知概念与个人语言系统 | v4.0.0 |
+| **wg-github-tuisong** | `wg-github-tuisong/` | Push local skill files to GitHub repos (gh api + MCP push_files) | v1.2.0 |
+| **wg-github-renew-locate** | `wg-github-renew-locate/` | Pull and update skills from GitHub repos to local | v1.0.0 |
+| **wg-biji-note-extractor** | `wg-biji-note-extractor/` | Batch extract notes from biji.com knowledge bases via API | v3.0.0 |
+| **wg-insight-engine** | `wg-insight-engine/` | Positive capability amplifier: stronger judgment, deeper frameworks, better advice | v1.0.0 |
+| **wg-cognitive-reconstruction** | `wg-cognitive-reconstruction/` | Bounded opinion discussion: train absorption, argumentation logic, and personal language | v4.0.0 |
 
 ## Install
 
-在 Agent 对话中发送：
+Send in an Agent conversation:
 
 ```text
-请从 https://github.com/WalkGod-Lei/wg-skills 安装 wg-biji-note-extractor skill。
-把 wg-biji-note-extractor/ 目录复制到本地 skills/wg-biji-note-extractor/，验证 SKILL.md 和 scripts/extract_biji.cjs 均存在。
+Please install the wg-biji-note-extractor skill from https://github.com/WalkGod-Lei/wg-skills.
+Copy the wg-biji-note-extractor/ directory to local skills/wg-biji-note-extractor/, verify SKILL.md and scripts/extract_biji.cjs both exist.
 ```
 
-macOS / Linux（以 Codex 为例）：
+macOS / Linux (Codex example):
 
 ```bash
 mkdir -p ~/.codex/skills/wg-biji-note-extractor && \
@@ -29,7 +29,7 @@ curl -sL https://github.com/WalkGod-Lei/wg-skills/archive/refs/heads/main.tar.gz
 tar xz --strip-components=2 -C ~/.codex/skills/wg-biji-note-extractor wg-skills-main/wg-biji-note-extractor
 ```
 
-Windows PowerShell 一键安装：
+Windows PowerShell one-click install:
 
 ```powershell
 irm https://raw.githubusercontent.com/WalkGod-Lei/wg-skills/main/wg-biji-note-extractor/install.ps1 | iex
@@ -37,6 +37,6 @@ irm https://raw.githubusercontent.com/WalkGod-Lei/wg-skills/main/wg-biji-note-ex
 
 ## About
 
-所有 skill 均为 AI agent（Codex、QoderWork、WorkBuddy 等）设计，遵循 `SKILL.md` 约定。
-每个 skill 目录包含 `SKILL.md`，并可按需包含 `scripts/`、`references/` 和 `agents/`。
-安装方式：将目标 skill 目录完整复制到 agent 的 skills 文件夹，或使用该目录提供的安装脚本。
+All skills are designed for AI agents (Codex, QoderWork, WorkBuddy, etc.) and follow the `SKILL.md` convention.
+Each skill directory contains `SKILL.md`, and optionally `scripts/`, `references/`, and `agents/`.
+Installation: copy the target skill directory to the agent's skills folder, or use the provided install script.
