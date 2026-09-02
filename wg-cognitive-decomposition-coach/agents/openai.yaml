@@ -1,0 +1,4 @@
+interface:
+  display_name: "认知剖析训练"
+  short_description: "通过渐进追问训练独立拆解观点、因果关系与证据边界"
+  default_prompt: "Use $wg-cognitive-decomposition-coach to coach me through this claim step by step without giving the full analysis first."
