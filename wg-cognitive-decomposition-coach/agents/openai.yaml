@@ -1,4 +1,5 @@
 interface:
   display_name: "认知剖析训练"
-  short_description: "通过渐进追问训练独立拆解观点、因果关系与证据边界"
-  default_prompt: "Use $wg-cognitive-decomposition-coach to coach me through this claim step by step without giving the full analysis first."
+  short_description: "先建内部教练地图，再用追问与知识脚手架训练独立判断"
+  default_prompt: "Use $wg-cognitive-decomposition-coach to build a private provisional coach map, then guide me step by step; supply bounded concepts, mechanisms, variables, or evidence when I have a knowledge gap instead of repeatedly asking me to prove the claim."
+
