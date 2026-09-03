@@ -11,7 +11,7 @@ WG is short for WalkGod. This is the public-facing part of the WalkGod personal 
 | **wg-biji-note-extractor** | `wg-biji-note-extractor/` | Batch extract notes from biji.com knowledge bases via API | v3.0.0 |
 | **wg-insight-engine** | `wg-insight-engine/` | Positive capability amplifier: stronger judgment, deeper frameworks, better advice | v1.0.0 |
 | **wg-cognitive-reconstruction** | `wg-cognitive-reconstruction/` | Bounded opinion discussion: train absorption, argumentation logic, and personal language | v4.0.0 |
-| **wg-cognitive-decomposition-coach** | `wg-cognitive-decomposition-coach/` | Socratic coaching for independently analyzing claims, causal reasoning, and evidence boundaries | v1.0.0 |
+| **wg-cognitive-decomposition-coach** | `wg-cognitive-decomposition-coach/` | Hidden coach map with Socratic guidance and knowledge, evidence, and language scaffolds | v1.1.0 |
 
 ## Install
 
