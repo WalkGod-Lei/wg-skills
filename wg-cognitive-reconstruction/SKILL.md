@@ -251,7 +251,9 @@ description: 通过有边界的观点讨论，把外部观点、金句和高认�
 
 用户要求保存且以下个人知识库可用时，写入：
 
-`D:\workforce\Obsidian\WalkGod\02-内容\认知仓库\98朕的圣谕`
+`D:\workforce\Obsidian\WalkGod\02-内容\认知仓库\99朕的圣谕\认知重构训练`
+
+该目录只保存 `wg-cognitive-reconstruction` 产生的观点吸收、论证学习、表达训练与复训记录。不要与 `wg-cognitive-decomposition-coach` 的因果剖析训练状态混放。
 
 同时在当天日志记录训练进展：
 
