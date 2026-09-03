@@ -1,5 +1,4 @@
 interface:
   display_name: "认知剖析训练"
   short_description: "先建内部教练地图，再用追问与知识脚手架训练独立判断"
-  default_prompt: "Use $wg-cognitive-decomposition-coach to build a private provisional coach map, then guide me step by step; supply bounded concepts, mechanisms, variables, or evidence when I have a knowledge gap instead of repeatedly asking me to prove the claim."
-
+  default_prompt: "请使用 $wg-cognitive-decomposition-coach：先在内部建立可修正的教练地图，再逐步引导我分析；如果我缺少知识，请补充少量概念、机制、变量或证据，不要只让我反复举证。"
