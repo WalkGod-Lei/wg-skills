@@ -1,28 +1,30 @@
 # wg-skills
 
-WG is short for WalkGod. This is the public-facing part of the WalkGod personal AI system: reusable Skills, tools, and workflows.
+WG 是 WalkGod 的缩写。这里是 WalkGod 个人 AI 系统中公开使用的部分，主要收录可复用的 Skills、工具和工作流。
 
-## Skills
+## 技能目录
 
-| Skill | Directory | Description | Version |
-|-------|-----------|-------------|--------|
-| **wg-github-tuisong** | `wg-github-tuisong/` | Push local skill files to GitHub repos (gh api + MCP push_files) | v1.2.0 |
-| **wg-github-renew-locate** | `wg-github-renew-locate/` | Pull and update skills from GitHub repos to local | v1.0.0 |
-| **wg-biji-note-extractor** | `wg-biji-note-extractor/` | Batch extract notes from biji.com knowledge bases via API | v3.0.0 |
-| **wg-insight-engine** | `wg-insight-engine/` | Positive capability amplifier: stronger judgment, deeper frameworks, better advice | v1.0.0 |
-| **wg-cognitive-reconstruction** | `wg-cognitive-reconstruction/` | Bounded opinion discussion: train absorption, argumentation logic, and personal language | v4.0.0 |
-| **wg-cognitive-decomposition-coach** | `wg-cognitive-decomposition-coach/` | Hidden coach map with Socratic guidance and knowledge, evidence, and language scaffolds | v1.1.3 |
+| 技能 | 目录 | 功能简介 | 版本 |
+|------|------|----------|------|
+| **wg-github-tuisong** | `wg-github-tuisong/` | 将本地 Skill 文件同步推送到 GitHub | v1.2.0 |
+| **wg-github-renew-locate** | `wg-github-renew-locate/` | 从 GitHub 拉取并更新本地 Skill | v1.0.0 |
+| **wg-biji-note-extractor** | `wg-biji-note-extractor/` | 批量提取得到大脑、得到笔记知识库中的完整笔记 | v3.0.0 |
+| **wg-insight-engine** | `wg-insight-engine/` | 增强判断、提炼框架并给出更深入的分析建议 | v1.0.0 |
+| **wg-cognitive-reconstruction** | `wg-cognitive-reconstruction/` | 通过观点讨论训练理解、论证和个人表达 | v4.0.0 |
+| **wg-cognitive-decomposition-coach** | `wg-cognitive-decomposition-coach/` | 先建立内部教练地图，再通过渐进追问和知识、证据、表达脚手架训练独立判断 | v1.1.4 |
 
-## Install
+## 安装方法
 
-Send in an Agent conversation:
+### 得到笔记提取 Skill
+
+可以在 Agent 对话中发送：
 
 ```text
-Please install the wg-biji-note-extractor skill from https://github.com/WalkGod-Lei/wg-skills.
-Copy the wg-biji-note-extractor/ directory to local skills/wg-biji-note-extractor/, verify SKILL.md and scripts/extract_biji.cjs both exist.
+请从 https://github.com/WalkGod-Lei/wg-skills 安装 wg-biji-note-extractor Skill。
+将仓库中的 wg-biji-note-extractor/ 目录复制到本地 skills/wg-biji-note-extractor/，并确认 SKILL.md 和 scripts/extract_biji.cjs 都存在。
 ```
 
-macOS / Linux (Codex example):
+macOS / Linux（以 Codex 为例）：
 
 ```bash
 mkdir -p ~/.codex/skills/wg-biji-note-extractor && \
@@ -30,20 +32,22 @@ curl -sL https://github.com/WalkGod-Lei/wg-skills/archive/refs/heads/main.tar.gz
 tar xz --strip-components=2 -C ~/.codex/skills/wg-biji-note-extractor wg-skills-main/wg-biji-note-extractor
 ```
 
-Windows PowerShell one-click install:
+Windows PowerShell 一键安装：
 
 ```powershell
 irm https://raw.githubusercontent.com/WalkGod-Lei/wg-skills/main/wg-biji-note-extractor/install.ps1 | iex
 ```
 
-Install the cognitive decomposition coach in an Agent conversation:
+### 认知剖析训练 Skill
+
+可以在 Agent 对话中发送：
 
 ```text
-Please install the wg-cognitive-decomposition-coach skill from https://github.com/WalkGod-Lei/wg-skills.
-Copy the wg-cognitive-decomposition-coach/ directory to local skills/wg-cognitive-decomposition-coach/ and verify SKILL.md, agents/openai.yaml, and all references exist.
+请从 https://github.com/WalkGod-Lei/wg-skills 安装 wg-cognitive-decomposition-coach Skill。
+将仓库中的 wg-cognitive-decomposition-coach/ 目录复制到本地 skills/wg-cognitive-decomposition-coach/，并确认 SKILL.md、agents/openai.yaml 和 references/ 下的全部文件都存在。
 ```
 
-macOS / Linux (Codex example):
+macOS / Linux（以 Codex 为例）：
 
 ```bash
 mkdir -p ~/.codex/skills/wg-cognitive-decomposition-coach && \
@@ -51,8 +55,9 @@ curl -sL https://github.com/WalkGod-Lei/wg-skills/archive/refs/heads/main.tar.gz
 tar xz --strip-components=2 -C ~/.codex/skills/wg-cognitive-decomposition-coach wg-skills-main/wg-cognitive-decomposition-coach
 ```
 
-## About
+## 仓库说明
 
-All skills are designed for AI agents (Codex, QoderWork, WorkBuddy, etc.) and follow the `SKILL.md` convention.
-Each skill directory contains `SKILL.md`, and optionally `scripts/`, `references/`, and `agents/`.
-Installation: copy the target skill directory to the agent's skills folder, or use the provided install script.
+- 每个 Skill 目录都包含一个 `SKILL.md`，并可按需要附带 `scripts/`、`references/`、`agents/` 等目录。
+- 安装时只需复制目标 Skill 目录，不必复制整个仓库。
+- 技术字段、文件名和命令保留英文；能力说明、使用方法和边界说明以中文为主。
+
