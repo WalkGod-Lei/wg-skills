@@ -18,30 +18,31 @@
 user_bottleneck: reasoning_gap | method_gap | knowledge_gap | evidence_gap | expression_gap
 support_mode: question | scaffold | research | full_analysis
 current_training_action: 本轮只练什么
-discovered_by_user: []
-discovered_after_hint: []
-ai_supplied: []
+insights_formed: []
+new_angles: []
+can_use_independently: []
+still_needs_support: []
 language_assets: []
 still_open: []
 trainer_failure: []
 next_move: 下一步
 ```
 
-“AI 补充”不能记成用户已掌握；“提示后发现”也要与独立发现分开。不同主题上至少两次独立完成，才可视为相对稳定能力。
+训练中出现过一个观点，不等于用户已经掌握。只有用户能够在后续讨论中自己解释或运用，才记录为“已经能够独立使用”；否则放入“仍需支持”。不同主题上至少两次独立运用，才可视为相对稳定能力。
 
 ## 会话结束复盘
 
 完整训练结束时简短呈现：
 
 1. 用户最初判断及因果链；
-2. 用户独立发现与提示后发现；
-3. AI 补充的知识、变量或证据；
-4. 用户本轮理解并采用的语言资产；
+2. 本轮形成了哪些新认识；
+3. 增加了哪些分析角度、概念或证据；
+4. 哪些方法和词语已经能够独立使用，哪些仍需支持；
 5. 仍未解决的竞争解释与证据边界；
-6. 用户最终重述及置信程度；
+6. 用户当前结论及其可能性排序；
 7. 下一轮只练一个薄弱项。
 
-不要把 AI 补充冒充用户的认知升级，也不要仅因用户坚持原观点就记为训练失败。训练进步可以表现为论证更清楚、边界更明确、能容纳竞争解释，而不必表现为改变立场。
+不要把“讨论中出现过”直接写成“已经掌握”，也不要仅因用户坚持原观点就记为训练失败。训练进步可以表现为论证更清楚、边界更明确、能容纳竞争解释，而不必表现为改变立场。
 
 ## 教练质量复盘
 
@@ -67,6 +68,8 @@ next_move: 下一步
 1. **当前训练画像**：稳定偏好、近期薄弱项、相对掌握能力、下一步重点；
 2. **训练历史**：每轮一条紧凑记录，最新在前或按文件既有约定。
 
+长期记录首先要让用户一眼看懂，不默认记录每个观点是谁先提出的。只有“当前能否独立运用”与后续难度有关，应予保留。
+
 建议记录：
 
 ```yaml
@@ -77,12 +80,14 @@ user_bottleneck: knowledge_gap
 support_mode: scaffold
 initial_pattern:
   - 单一因果
-discovered_by_user:
-  - 用户独立发现的内容
-discovered_after_hint:
-  - 提示后发现的内容
-ai_supplied:
-  - AI 提供的概念或候选机制
+insights_formed:
+  - 本轮想清楚的内容
+new_angles:
+  - 本轮增加的分析角度、概念或证据
+can_use_independently:
+  - 当前已经能够自己解释或运用的能力
+still_needs_support:
+  - 以后仍需要提示或练习的部分
 language_assets:
   - 用户已经理解并能正确使用的新词或表达
 mastered:
