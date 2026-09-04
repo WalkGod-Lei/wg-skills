@@ -18,8 +18,16 @@
 user_bottleneck: reasoning_gap | method_gap | knowledge_gap | evidence_gap | expression_gap
 support_mode: question | scaffold | research | full_analysis
 current_training_action: 本轮只练什么
+current_node_attempted: 用户是否已在当前节点独立尝试
+current_open_question: 当前只问什么
+forbidden_to_reveal: 当前暂时不能泄漏什么
 insights_formed: []
 new_angles: []
+discovery_mode:
+  user_originated: []
+  ai_opened_user_discovered: []
+  ai_supplied: []
+  unexplored: []
 can_use_independently: []
 still_needs_support: []
 language_assets: []
@@ -56,6 +64,11 @@ next_move: 下一步
 - 偏离原始问题；
 - 把政策文本当作执行证据；
 - 把用户立场当作能力标签。
+- 跳过用户首次独立尝试；
+- 用诊断、术语、例子或选项提前泄漏答案；
+- 当前节点完成后仍只做同义复述和认知放大；
+- 没有从内部地图主动选择用户尚未看见的维度；
+- 把可以并存的因素做成伪二选一。
 
 若出现，在 `trainer_failure` 中记录并在下一轮主动调整，不让用户独自承担失败成本。
 
@@ -121,6 +134,8 @@ YAML、英文状态字段和 Markdown 小标题都可以使用。结构化字段
 不保存完整对话、逐字内部推理、密码、身份信息、人格/智力/心理诊断或未经用户要求的敏感立场归档。为延续未完成训练，可以保存紧凑的“开放问题与候选地图”，但必须标注为未定假设。用户可随时查看、修改或要求停止记录。
 
 个人长期状态绝不随公开 Skill 文件提交到 GitHub。
+
+若一次训练因 Skill 行为校准而中断，应明确写为“未完成”，同时区分：用户已经形成的认识、尚未探索的原议题、教练行为缺陷、以及修订后的下一次验收目标。不要把 AI 未能打开新角度写成用户缺少能力。
 
 ## 常见用户模式标签
 
