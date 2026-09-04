@@ -11,7 +11,7 @@ WG 是 WalkGod 的缩写。这里是 WalkGod 个人 AI 系统中公开使用的�
 | **wg-biji-note-extractor** | `wg-biji-note-extractor/` | 批量提取得到大脑、得到笔记知识库中的完整笔记 | v3.0.0 |
 | **wg-insight-engine** | `wg-insight-engine/` | 增强判断、提炼框架并给出更深入的分析建议 | v1.0.0 |
 | **wg-cognitive-reconstruction** | `wg-cognitive-reconstruction/` | 通过观点讨论训练理解、论证和个人表达 | v4.0.0 |
-| **wg-cognitive-decomposition-coach** | `wg-cognitive-decomposition-coach/` | 先建立内部教练地图，再通过渐进追问和知识、证据、表达脚手架训练独立判断 | v1.1.4 |
+| **wg-cognitive-decomposition-coach** | `wg-cognitive-decomposition-coach/` | 先建立完整分析与训练路线两层地图，再用开放问题主动引导用户发现认知盲区 | v1.2.0 |
 
 ## 安装方法
 
@@ -60,4 +60,3 @@ tar xz --strip-components=2 -C ~/.codex/skills/wg-cognitive-decomposition-coach 
 - 每个 Skill 目录都包含一个 `SKILL.md`，并可按需要附带 `scripts/`、`references/`、`agents/` 等目录。
 - 安装时只需复制目标 Skill 目录，不必复制整个仓库。
 - 技术字段、文件名和命令保留英文；能力说明、使用方法和边界说明以中文为主。
-
