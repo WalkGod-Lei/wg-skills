@@ -12,6 +12,7 @@ WG 是 WalkGod 的缩写。这里是 WalkGod 个人 AI 系统中公开使用的�
 | **wg-insight-engine** | `wg-insight-engine/` | 增强判断、提炼框架并给出更深入的分析建议 | v1.0.0 |
 | **wg-cognitive-reconstruction** | `wg-cognitive-reconstruction/` | 通过观点讨论训练理解、论证和个人表达 | v4.0.0 |
 | **wg-cognitive-decomposition-coach** | `wg-cognitive-decomposition-coach/` | 先建立完整分析与训练路线两层地图，再用开放问题主动引导用户发现认知盲区 | v1.2.0 |
+| **wg-douyin-effect-archive** | `wg-douyin-effect-archive/` | 通过像塑 MCP 只读归档完整工程与美颜参数到 Obsidian，独立分析传播原因并经用户讨论确认定稿 | 初版 |
 
 ## 安装方法
 
@@ -54,6 +55,37 @@ mkdir -p ~/.codex/skills/wg-cognitive-decomposition-coach && \
 curl -sL https://github.com/WalkGod-Lei/wg-skills/archive/refs/heads/main.tar.gz | \
 tar xz --strip-components=2 -C ~/.codex/skills/wg-cognitive-decomposition-coach wg-skills-main/wg-cognitive-decomposition-coach
 ```
+
+### 抖音特效完整归档 Skill
+
+可以在 Agent 对话中发送：
+
+```text
+请从 https://github.com/WalkGod-Lei/wg-skills 安装 wg-douyin-effect-archive Skill。
+将仓库中的 wg-douyin-effect-archive/ 目录复制到本地 skills/wg-douyin-effect-archive/，并确认 SKILL.md、agents/openai.yaml、references/ 下的全部文件和 assets/effect-archive-template.md 都存在。
+```
+
+macOS / Linux（以 Codex 为例）：
+
+```bash
+mkdir -p ~/.codex/skills/wg-douyin-effect-archive && \
+curl -sL https://github.com/WalkGod-Lei/wg-skills/archive/refs/heads/main.tar.gz | \
+tar xz --strip-components=2 -C ~/.codex/skills/wg-douyin-effect-archive wg-skills-main/wg-douyin-effect-archive
+```
+
+调用示例：
+
+```text
+使用 $wg-douyin-effect-archive 记录当前像塑工程。
+来源：他人制作；名称：XXX；投稿量：截图显示19.1万。
+先保存完整技术信息，再分析传播原因，等我补充观点并确认后更新正式结论。
+```
+
+- 需要可用的像塑 MCP、可访问的工程及本地 Obsidian 知识库；安装 Skill 不会自动安装或连接像塑 MCP。
+- 像塑仅通过 MCP 操作，禁止 Computer Use 和其他界面自动化；本任务不修改特效工程。
+- 默认归档位置为走神知识库，其他使用者应明确指定自己的 vault 路径；作品分别放入“我制作的特效”和“他人制作的特效”。
+- 主档案先展示基本信息，紧接着展示传播分析，再提供完整技术参数；投稿量保留观察日期和来源。
+- 技术归档可以先完成，分析独立标记为待确认；用户认可后才定稿，不把投稿量或用户确认当作因果证明。
 
 ## 仓库说明
 
