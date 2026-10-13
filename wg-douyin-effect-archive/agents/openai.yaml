@@ -1,0 +1,4 @@
+interface:
+  display_name: "抖音特效完整归档与传播分析"
+  short_description: "通过MCP完整记录工程参数到走神Obsidian，先独立分析传播原因再由用户确认"
+  default_prompt: "使用 $wg-douyin-effect-archive 归档指定像塑特效，先保存完整技术数据，再提交传播原因分析供我补充和确认；仅用MCP操作像塑，不修改工程。"
