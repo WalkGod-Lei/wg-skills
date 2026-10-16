@@ -13,6 +13,7 @@ WG 是 WalkGod 的缩写。这里是 WalkGod 个人 AI 系统中公开使用的�
 | **wg-cognitive-reconstruction** | `wg-cognitive-reconstruction/` | 通过观点讨论训练理解、论证和个人表达 | v4.0.0 |
 | **wg-cognitive-decomposition-coach** | `wg-cognitive-decomposition-coach/` | 先建立完整分析与训练路线两层地图，再用开放问题主动引导用户发现认知盲区 | v1.2.0 |
 | **wg-douyin-effect-archive** | `wg-douyin-effect-archive/` | 通过像塑 MCP 只读归档完整工程与美颜参数到 Obsidian，独立分析传播原因并经用户讨论确认定稿 | 初版 |
+| **wg-xiangsu-icon** | `wg-xiangsu-icon/` | 生成或修改无文字的像塑特效图标，核验上传尺寸与体积，将可上传成品保存到桌面；不依赖 Obsidian | 初版 |
 
 ## 安装方法
 
@@ -86,6 +87,36 @@ tar xz --strip-components=2 -C ~/.codex/skills/wg-douyin-effect-archive wg-skill
 - 默认归档位置为走神知识库，其他使用者应明确指定自己的 vault 路径；作品分别放入“我制作的特效”和“他人制作的特效”。
 - 主档案先展示基本信息，紧接着展示传播分析，再提供完整技术参数；投稿量保留观察日期和来源。
 - 技术归档可以先完成，分析独立标记为待确认；用户认可后才定稿，不把投稿量或用户确认当作因果证明。
+
+### 像塑特效图标制作 Skill
+
+可以在 Agent 对话中发送：
+
+```text
+请从 https://github.com/WalkGod-Lei/wg-skills 安装 wg-xiangsu-icon Skill。
+将仓库中的 wg-xiangsu-icon/ 目录复制到本地 skills/wg-xiangsu-icon/，并确认 SKILL.md 和 agents/openai.yaml 都存在。
+```
+
+macOS / Linux（以 Codex 为例）：
+
+```bash
+mkdir -p ~/.codex/skills/wg-xiangsu-icon && \
+curl -sL https://github.com/WalkGod-Lei/wg-skills/archive/refs/heads/main.tar.gz | \
+tar xz --strip-components=2 -C ~/.codex/skills/wg-xiangsu-icon wg-skills-main/wg-xiangsu-icon
+```
+
+调用示例：
+
+```text
+使用 $wg-xiangsu-icon，按这张已确认效果图制作无文字的正方形特效图标，核验尺寸和体积后把可上传成品放在桌面。
+```
+
+- 需要可用的内置图像生成能力；安装本技能不会自动提供图像生成服务。
+- 要求完整写在技能中，不读取或写入 Obsidian，不因制作图标而修改特效工程。
+- 图标不含名称、标题、字母、数字、界面或水印；特效命名另行在对话中提供。
+- 默认建议512×512高质量JPG；按当前已知上传限制，宽高均不超过1280像素、文件小于2,000,000字节，新要求以用户提供的实际入口要求为准。
+- 原图保留在工作区，另存可上传文件到实际桌面；交付前检查最终文件的真实尺寸、格式、体积和无文字画面。
+- 本地核验不代表平台已接收，不自动上传、提交审核或发布。
 
 ## 仓库说明
 
