@@ -1,0 +1,4 @@
+interface:
+  display_name: "像塑特效图标制作"
+  short_description: "生成无文字的像塑特效图标，核验上传尺寸与体积并保存到桌面"
+  default_prompt: "使用 $wg-xiangsu-icon 为当前特效制作无文字的正方形图标，核验上传规格后将成品保存到桌面。"
