@@ -1,0 +1,6 @@
+interface:
+  display_name: "科研日终同步"
+  short_description: "日终同步 Obsidian 与下次组会任务"
+  default_prompt: "Use $obsidian-research-daily-close to record today’s research work and synchronize my Obsidian vault."
+policy:
+  allow_implicit_invocation: false
