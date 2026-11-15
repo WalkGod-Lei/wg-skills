@@ -13,7 +13,7 @@ WG 是 WalkGod 的缩写。这里是 WalkGod 个人 AI 系统中公开使用的�
 | **wg-cognitive-reconstruction** | `wg-cognitive-reconstruction/` | 通过观点讨论训练理解、论证和个人表达 | v4.0.0 |
 | **wg-cognitive-decomposition-coach** | `wg-cognitive-decomposition-coach/` | 先建立完整分析与训练路线两层地图，再用开放问题主动引导用户发现认知盲区 | v1.2.0 |
 | **wg-douyin-effect-archive** | `wg-douyin-effect-archive/` | 通过像塑 MCP 只读归档完整工程与美颜参数到 Obsidian，独立分析传播原因并经用户讨论确认定稿 | 初版 |
-| **wg-xiangsu-icon** | `wg-xiangsu-icon/` | 生成或修改像塑特效图标，按用途选择纯画面或简短文字，核验上传尺寸与体积，将可上传成品保存到桌面；不依赖 Obsidian | 初版 |
+| **wg-xiangsu-icon** | `wg-xiangsu-icon/` | 制作像塑特效图标，文字能帮助观众理解效果或玩法时就加上，核验上传规格后保存到桌面 | 已更新 |
 | **obsidian-research-daily-close** | `obsidian-research-daily-close/` | 日终整合科研记录，同步 Obsidian 中的研究状态，并维护下次组会前任务 | 初版 |
 
 ## 安装方法
@@ -109,12 +109,12 @@ tar xz --strip-components=2 -C ~/.codex/skills/wg-xiangsu-icon wg-skills-main/wg
 调用示例：
 
 ```text
-使用 $wg-xiangsu-icon，按这张已确认效果图制作正方形特效图标，根据用途决定是否加入简短文字，核验尺寸和体积后把可上传成品放在桌面。
+使用 $wg-xiangsu-icon，按这张已确认效果图制作正方形特效图标。判断短文字能否帮助观众理解特效或玩法，有帮助就加上，交付前用缩略图复核，再核验上传规格并将成品放在桌面。
 ```
 
 - 需要可用的内置图像生成能力；安装本技能不会自动提供图像生成服务。
 - 要求完整写在技能中，不读取或写入 Obsidian，不因制作图标而修改特效工程。
-- 图标可采用纯画面，或加入简短的游戏名、玩法名或类型说明；文字须与实际效果一致、准确且缩略图可读，不含平台界面、水印或无关宣传。
+- 从第一次看到图标的观众出发。短文字能更快说明核心动作、效果或目标时，就加上。交付前再看缩略图，核对文字是否准确、易读，且帮助理解玩法。
 - 默认建议512×512高质量JPG；按当前已知上传限制，宽高均不超过1280像素、文件小于2,000,000字节，新要求以用户提供的实际入口要求为准。
 - 原图保留在工作区，另存可上传文件到实际桌面；交付前检查最终文件的真实尺寸、格式、体积；纯画面版核对无文字，含字版逐字核对文案及缩略图可读性。
 - 本地核验不代表平台已接收，不自动上传、提交审核或发布。
