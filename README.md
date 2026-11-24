@@ -15,6 +15,7 @@ WG 是 WalkGod 的缩写。这里是 WalkGod 个人 AI 系统中公开使用的�
 | **wg-douyin-effect-archive** | `wg-douyin-effect-archive/` | 通过像塑 MCP 只读归档完整工程与美颜参数到 Obsidian，独立分析传播原因并经用户讨论确认定稿 | 初版 |
 | **wg-xiangsu-icon** | `wg-xiangsu-icon/` | 制作像塑特效图标，文字能帮助观众理解效果或玩法时就加上，核验上传规格后保存到桌面 | 已更新 |
 | **obsidian-research-daily-close** | `obsidian-research-daily-close/` | 日终整合科研记录，同步 Obsidian 中的研究状态，并维护下次组会前任务 | 初版 |
+| **obsidian-lab-archive** | `obsidian-lab-archive/` | 将实验数据和配图按日归档到 Obsidian，同日追加，并单独保存待执行的硬件改版建议 | 初版 |
 
 ## 安装方法
 
